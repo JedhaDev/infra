@@ -35,7 +35,7 @@ curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/
 conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
-conda activate a1111-sdwebui
+conda source activate a1111-sdwebui
 
 # Go back to the root of the repo..
 cd ../..
@@ -61,5 +61,5 @@ conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c
 git config --global --add safe.directory '*'
 
 # Don't forget to pick a good userame/password combo, otherwise anyone will be able to access your instance
-accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth <user>:<pass>
+accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
 
