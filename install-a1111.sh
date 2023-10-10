@@ -48,7 +48,7 @@ wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE
 sudo /anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
-sudo /anaconda/bin/conda source activate a1111-sdwebui
+sudo /anaconda/bin/conda activate a1111-sdwebui
 
 # Go back to the root of the repo..
 cd ../..
