@@ -26,7 +26,7 @@ conda update conda
 # sudo apt update 
 # sudo apt install nvidia-driver-460 # replace 460 with your specific version
 
-sudo apt-get update
+sudo apt-get --assume-yes update
 sudo apt-get upgrade -y
 sudo apt-get dist-upgrade -y
 sudo apt install nvidia-driver-460 # replace 460 with your specific version
@@ -53,42 +53,42 @@ sudo conda source activate a1111-sdwebui
 # Go back to the root of the repo..
 cd ../..
 
-pip install --upgrade pip
+sudo pip install --upgrade pip
 
 # ..so we can install the repository's dependencies..
-pip install GitPython
-pip install Pillow
-pip install accelerate
+sudo pip install --root-user-action=ignore GitPython
+sudo pip install --root-user-action=ignore Pillow
+sudo pip install --root-user-action=ignore accelerate
 
-pip install basicsr
-pip install blendmodes
-pip install clean-fid
-pip install einops
-pip install gfpgan
-pip install gradio==3.32.0
-pip install inflection
-pip install jsonmerge
-pip install kornia
-pip install lark
-pip install numpy
-pip install omegaconf
+sudo pip install --root-user-action=ignore basicsr
+sudo pip install --root-user-action=ignore blendmodes
+sudo pip install --root-user-action=ignore clean-fid
+sudo pip install --root-user-action=ignore einops
+sudo pip install --root-user-action=ignore gfpgan
+sudo pip install --root-user-action=ignore gradio==3.32.0
+sudo pip install --root-user-action=ignore inflection
+sudo pip install --root-user-action=ignore jsonmerge
+sudo pip install --root-user-action=ignore kornia
+sudo pip install --root-user-action=ignore lark
+sudo pip install --root-user-action=ignore numpy
+sudo pip install --root-user-action=ignore omegaconf
 
-pip install piexif
-pip install psutil
-pip install pytorch_lightning
-pip install realesrgan
-pip install requests
-pip install resize-right
+sudo pip install --root-user-action=ignore piexif
+sudo pip install --root-user-action=ignore psutil
+sudo pip install --root-user-action=ignore pytorch_lightning
+sudo pip install --root-user-action=ignore realesrgan
+sudo pip install --root-user-action=ignore requests
+sudo pip install --root-user-action=ignore resize-right
 
-pip install safetensors
-pip install scikit-image>=0.19
-pip install timm
-pip install tomesd
-pip install torch
-pip install torchdiffeq
-pip install torchsde
-pip install transformers==4.25.1
-pip install chardet
+sudo pip install --root-user-action=ignore safetensors
+sudo pip install --root-user-action=ignore scikit-image>=0.19
+sudo pip install --root-user-action=ignore timm
+sudo pip install --root-user-action=ignore tomesd
+sudo pip install --root-user-action=ignore torch
+sudo pip install --root-user-action=ignore torchdiffeq
+sudo pip install --root-user-action=ignore torchsde
+sudo pip install --root-user-action=ignore transformers==4.25.1
+sudo pip install --root-user-action=ignore chardet
 
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
