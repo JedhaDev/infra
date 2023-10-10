@@ -93,7 +93,7 @@ sudo pip install --root-user-action=ignore chardet
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
 # So, we need to install the missing dependencies directly from conda
-sudo /anaconda/bin/conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c pytorch -c nvidia -y
+sudo /anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 
 # Mark everything as a safe directory,
 # we need this because when first run,
