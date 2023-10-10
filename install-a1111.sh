@@ -20,7 +20,7 @@ sudo bash Anaconda3-4.2.0-Linux-x86_64.sh -b -p ~/anaconda
 PATH="$HOME/anaconda/bin:$PATH"
 source .bashrc
 
-conda update conda
+sudo $HOME/anaconda/bin/conda update conda -y
 
 # sudo add-apt-repository ppa:graphics-drivers/ppa 
 # sudo apt update 
@@ -28,7 +28,7 @@ conda update conda
 
 sudo apt-get --assume-yes update
 sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -y
+# sudo apt-get dist-upgrade -y
 sudo apt install nvidia-driver-460 # replace 460 with your specific version
 sudo apt-get install cuda-drivers
 
@@ -45,10 +45,10 @@ wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE
 # curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
 
 # Create a new Conda env with the desired Python version
-sudo conda create -n a1111-sdwebui python=3.10 -y
+sudo $HOME/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
-sudo conda source activate a1111-sdwebui
+sudo $HOME/anaconda/bin/conda source activate a1111-sdwebui
 
 # Go back to the root of the repo..
 cd ../..
@@ -93,7 +93,7 @@ sudo pip install --root-user-action=ignore chardet
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
 # So, we need to install the missing dependencies directly from conda
-sudo conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c pytorch -c nvidia -y
+sudo $HOME/anaconda/bin/conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c pytorch -c nvidia -y
 
 # Mark everything as a safe directory,
 # we need this because when first run,
