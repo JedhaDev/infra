@@ -22,14 +22,27 @@ source .bashrc
 
 conda update conda
 
+# sudo add-apt-repository ppa:graphics-drivers/ppa 
+# sudo apt update 
+# sudo apt install nvidia-driver-460 # replace 460 with your specific version
+
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+sudo apt install nvidia-driver-460 # replace 460 with your specific version
+sudo apt-get install cuda-drivers
+
+
 # Clone the SD WebUI
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 
 # Go to the models folder
 cd stable-diffusion-webui/models/Stable-diffusion/
 
+wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
+
 # Download Stable Diffusion 1.5 checkpoint (requires a HuggingFace auth token)
-curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
+# curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
 
 # Create a new Conda env with the desired Python version
 sudo conda create -n a1111-sdwebui python=3.10 -y
@@ -40,56 +53,47 @@ sudo conda source activate a1111-sdwebui
 # Go back to the root of the repo..
 cd ../..
 
-sudo pip install --upgrade pip
+pip install --upgrade pip
 
 # ..so we can install the repository's dependencies..
-sudo pip install GitPython
-sudo pip install Pillow
-sudo pip install accelerate
+pip install GitPython
+pip install Pillow
+pip install accelerate
 
-sudo pip install basicsr
-sudo pip install blendmodes
-sudo pip install clean-fid
-sudo pip install einops
-sudo pip install gfpgan
-sudo pip install gradio==3.32.0
-sudo pip install inflection
-sudo pip install jsonmerge
-sudo pip install kornia
-sudo pip install lark
-sudo pip install numpy
-sudo pip install omegaconf
+pip install basicsr
+pip install blendmodes
+pip install clean-fid
+pip install einops
+pip install gfpgan
+pip install gradio==3.32.0
+pip install inflection
+pip install jsonmerge
+pip install kornia
+pip install lark
+pip install numpy
+pip install omegaconf
 
-sudo pip install piexif
-sudo pip install psutil
-sudo pip install pytorch_lightning
-sudo pip install realesrgan
-sudo pip install requests
-sudo pip install resize-right
+pip install piexif
+pip install psutil
+pip install pytorch_lightning
+pip install realesrgan
+pip install requests
+pip install resize-right
 
-sudo pip install safetensors
-sudo pip install scikit-image>=0.19
-sudo pip install timm
-sudo pip install tomesd
-sudo pip install torch
-sudo pip install torchdiffeq
-sudo pip install torchsde
-sudo pip install transformers==4.25.1
-
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -y
-sudo apt-get install cuda-drivers
+pip install safetensors
+pip install scikit-image>=0.19
+pip install timm
+pip install tomesd
+pip install torch
+pip install torchdiffeq
+pip install torchsde
+pip install transformers==4.25.1
+pip install chardet
 
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
 # So, we need to install the missing dependencies directly from conda
 sudo conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c pytorch -c nvidia -y
-
-
-# If you want/need an older version, see the alternatives here https://pytorch.org/get-started/previous-versions/
-# e.g. I've had success with 
-# conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch -y
 
 # Mark everything as a safe directory,
 # we need this because when first run,
