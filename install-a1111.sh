@@ -42,6 +42,8 @@ cd ../..
 
 sudo pip install --upgrade pip
 
+sudo pip install accelerate
+
 # ..so we can install the repository's dependencies..
 sudo pip install -r requirements_versions.txt 
 
