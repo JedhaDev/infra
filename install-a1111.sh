@@ -14,8 +14,8 @@ sudo apt --assume-yes install build-essential zlib1g-dev libncurses5-dev libgdbm
 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 
 # Conda
-wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
-sudo bash Anaconda3-4.2.0-Linux-x86_64.sh -b -p /anaconda
+wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh 
+sudo bash Anaconda3-2022.05-Linux-x86_64.sh  -b -p /anaconda
 
 PATH="/anaconda/bin:$PATH"
 source .bashrc
