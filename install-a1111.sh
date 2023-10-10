@@ -5,8 +5,19 @@ sudo dnf install wget git python3
 # Arch-based:
 sudo pacman -S wget git python3
 
+sudo apt --assume-yes install python3-pip
+
+
 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 
+# Conda
+wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
+sudo bash Anaconda3-4.2.0-Linux-x86_64.sh -b -p ~/anaconda
+
+PATH="$HOME/anaconda/bin:$PATH"
+source .bashrc
+
+conda update conda
 
 # Clone the SD WebUI
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
