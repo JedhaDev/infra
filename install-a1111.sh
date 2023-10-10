@@ -43,38 +43,38 @@ cd ../..
 sudo pip install --upgrade pip
 
 # ..so we can install the repository's dependencies..
-sudo pip install -r GitPython
-sudo pip install -r Pillow
-sudo pip install -r accelerate
+sudo pip install GitPython
+sudo pip install Pillow
+sudo pip install accelerate
 
-sudo pip install -r basicsr
-sudo pip install -r blendmodes
-sudo pip install -r clean-fid
-sudo pip install -r einops
-sudo pip install -r gfpgan
-sudo pip install -r gradio==3.32.0
-sudo pip install -r inflection
-sudo pip install -r jsonmerge
-sudo pip install -r kornia
-sudo pip install -r lark
-sudo pip install -r numpy
-sudo pip install -r omegaconf
+sudo pip install basicsr
+sudo pip install blendmodes
+sudo pip install clean-fid
+sudo pip install einops
+sudo pip install gfpgan
+sudo pip install gradio==3.32.0
+sudo pip install inflection
+sudo pip install jsonmerge
+sudo pip install kornia
+sudo pip install lark
+sudo pip install numpy
+sudo pip install omegaconf
 
-sudo pip install -r piexif
-sudo pip install -r psutil
-sudo pip install -r pytorch_lightning
-sudo pip install -r realesrgan
-sudo pip install -r requests
-sudo pip install -r resize-right
+sudo pip install piexif
+sudo pip install psutil
+sudo pip install pytorch_lightning
+sudo pip install realesrgan
+sudo pip install requests
+sudo pip install resize-right
 
-sudo pip install -r safetensors
-sudo pip install -r scikit-image>=0.19
-sudo pip install -r timm
-sudo pip install -r tomesd
-sudo pip install -r torch
-sudo pip install -r torchdiffeq
-sudo pip install -r torchsde
-sudo pip install -r transformers==4.25.1
+sudo pip install safetensors
+sudo pip install scikit-image>=0.19
+sudo pip install timm
+sudo pip install tomesd
+sudo pip install torch
+sudo pip install torchdiffeq
+sudo pip install torchsde
+sudo pip install transformers==4.25.1
 
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -100,4 +100,3 @@ git config --global --add safe.directory '*'
 
 # Don't forget to pick a good userame/password combo, otherwise anyone will be able to access your instance
 sudo accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
-
