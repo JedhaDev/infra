@@ -32,21 +32,23 @@ cd stable-diffusion-webui/models/Stable-diffusion/
 curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
 
 # Create a new Conda env with the desired Python version
-conda create -n a1111-sdwebui python=3.10 -y
+sudo conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
-conda source activate a1111-sdwebui
+sudo conda source activate a1111-sdwebui
 
 # Go back to the root of the repo..
 cd ../..
 
+sudo pip install --upgrade pip
+
 # ..so we can install the repository's dependencies..
-pip install -r requirements_versions.txt 
+sudo pip install -r requirements_versions.txt 
 
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
 # So, we need to install the missing dependencies directly from conda
-conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c pytorch -c nvidia -y
+sudo conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c pytorch -c nvidia -y
 
 
 # If you want/need an older version, see the alternatives here https://pytorch.org/get-started/previous-versions/
@@ -61,5 +63,5 @@ conda install pytorch=1.13 torchvision=0.14 torchaudio=0.13 pytorch-cuda=11.7 -c
 git config --global --add safe.directory '*'
 
 # Don't forget to pick a good userame/password combo, otherwise anyone will be able to access your instance
-accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
+sudo accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
 
