@@ -1,15 +1,15 @@
-apt-get update
+sudo apt-get --assume-yes update
+sudo apt --assume-yes install software-properties-common
+sudo add-apt-repository -y ppa:deadsnakes/ppa
 
-# Debian-based:
-sudo apt install wget git python3 python3-venv libgl1 libglib2.0-0
-# Red Hat-based:
-sudo dnf install wget git python3
-# Arch-based:
-sudo pacman -S wget git python3
+sudo apt --assume-yes install python3.9
 
 sudo apt --assume-yes install python3-pip
 
 sudo apt-get --assume-yes install python3-virtualenv
+
+sudo apt --assume-yes update
+sudo apt --assume-yes install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
 
 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 
