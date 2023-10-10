@@ -1,3 +1,5 @@
+apt-get update
+
 # Debian-based:
 sudo apt install wget git python3 python3-venv libgl1 libglib2.0-0
 # Red Hat-based:
@@ -7,6 +9,7 @@ sudo pacman -S wget git python3
 
 sudo apt --assume-yes install python3-pip
 
+sudo apt-get --assume-yes install python3-virtualenv
 
 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 
