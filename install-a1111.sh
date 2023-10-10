@@ -42,10 +42,44 @@ cd ../..
 
 sudo pip install --upgrade pip
 
-sudo pip install accelerate
-
 # ..so we can install the repository's dependencies..
-sudo pip install -r requirements_versions.txt 
+sudo pip install -r GitPython
+sudo pip install -r Pillow
+sudo pip install -r accelerate
+
+sudo pip install -r basicsr
+sudo pip install -r blendmodes
+sudo pip install -r clean-fid
+sudo pip install -r einops
+sudo pip install -r gfpgan
+sudo pip install -r gradio==3.32.0
+sudo pip install -r inflection
+sudo pip install -r jsonmerge
+sudo pip install -r kornia
+sudo pip install -r lark
+sudo pip install -r numpy
+sudo pip install -r omegaconf
+
+sudo pip install -r piexif
+sudo pip install -r psutil
+sudo pip install -r pytorch_lightning
+sudo pip install -r realesrgan
+sudo pip install -r requests
+sudo pip install -r resize-right
+
+sudo pip install -r safetensors
+sudo pip install -r scikit-image>=0.19
+sudo pip install -r timm
+sudo pip install -r tomesd
+sudo pip install -r torch
+sudo pip install -r torchdiffeq
+sudo pip install -r torchsde
+sudo pip install -r transformers==4.25.1
+
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+sudo apt-get install cuda-drivers
 
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
