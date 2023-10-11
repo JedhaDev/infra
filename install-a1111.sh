@@ -106,4 +106,4 @@ sudo /anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==
 git config --global --add safe.directory '*'
 
 # Don't forget to pick a good userame/password combo, otherwise anyone will be able to access your instance
-sudo accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
+# sudo accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
