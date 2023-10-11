@@ -29,9 +29,12 @@ sudo /anaconda/bin/conda update conda -y
 sudo apt-get --assume-yes update
 sudo apt-get upgrade -y
 # sudo apt-get dist-upgrade -y
-sudo apt install nvidia-driver-460 # replace 460 with your specific version
-sudo apt-get install cuda-drivers
-
+# sudo apt install nvidia-driver-460 # replace 460 with your specific version
+# sudo apt-get install cuda-drivers
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb 
+sudo dpkg -i cuda-keyring_1.0-1_all.deb
+sudo apt-get --assume-yes  update
+sudo apt-get -y install cuda-drivers
 
 # Clone the SD WebUI
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
