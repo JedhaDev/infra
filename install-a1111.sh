@@ -48,10 +48,10 @@ wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE
 # curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
 
 # Create a new Conda env with the desired Python version
-sudo /anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
+/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
-sudo /anaconda/bin/conda activate a1111-sdwebui
+/anaconda/bin/conda activate a1111-sdwebui
 
 # Go back to the root of the repo..
 cd ../..
@@ -59,44 +59,44 @@ cd ../..
 sudo pip install --upgrade pip
 
 # ..so we can install the repository's dependencies..
-sudo pip install --root-user-action=ignore GitPython
-sudo pip install --root-user-action=ignore Pillow
-sudo pip install --root-user-action=ignore accelerate
+pip install GitPython
+pip install Pillow
+pip install accelerate
 
-sudo pip install --root-user-action=ignore basicsr
-sudo pip install --root-user-action=ignore blendmodes
-sudo pip install --root-user-action=ignore clean-fid
-sudo pip install --root-user-action=ignore einops
-sudo pip install --root-user-action=ignore gfpgan
-sudo pip install --root-user-action=ignore gradio==3.32.0
-sudo pip install --root-user-action=ignore inflection
-sudo pip install --root-user-action=ignore jsonmerge
-sudo pip install --root-user-action=ignore kornia
-sudo pip install --root-user-action=ignore lark
-sudo pip install --root-user-action=ignore numpy
-sudo pip install --root-user-action=ignore omegaconf
+pip install basicsr
+pip install blendmodes
+pip install clean-fid
+pip install einops
+pip install gfpgan
+pip install gradio==3.32.0
+pip install inflection
+pip install jsonmerge
+pip install kornia
+pip install lark
+pip install numpy
+pip install omegaconf
 
-sudo pip install --root-user-action=ignore piexif
-sudo pip install --root-user-action=ignore psutil
-sudo pip install --root-user-action=ignore pytorch_lightning
-sudo pip install --root-user-action=ignore realesrgan
-sudo pip install --root-user-action=ignore requests
-sudo pip install --root-user-action=ignore resize-right
+pip install piexif
+pip install psutil
+pip install pytorch_lightning
+pip install realesrgan
+pip install requests
+pip install resize-right
 
-sudo pip install --root-user-action=ignore safetensors
-sudo pip install --root-user-action=ignore scikit-image>=0.19
-sudo pip install --root-user-action=ignore timm
-sudo pip install --root-user-action=ignore tomesd
-sudo pip install --root-user-action=ignore torch
-sudo pip install --root-user-action=ignore torchdiffeq
-sudo pip install --root-user-action=ignore torchsde
-sudo pip install --root-user-action=ignore transformers==4.25.1
-sudo pip install --root-user-action=ignore chardet
+pip install safetensors
+pip install scikit-image>=0.19
+pip install timm
+pip install tomesd
+pip install torch
+pip install torchdiffeq
+pip install torchsde
+pip install transformers==4.25.1
+pip install chardet
 
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
 # So, we need to install the missing dependencies directly from conda
-sudo /anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
+/anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 
 # Mark everything as a safe directory,
 # we need this because when first run,
