@@ -1,15 +1,16 @@
 sudo apt-get --assume-yes update
-sudo apt --assume-yes install software-properties-common
 sudo add-apt-repository -y ppa:deadsnakes/ppa
+sudo apt-get --assume-yes update
 
-sudo apt --assume-yes install python3.9
+sudo apt --assume-yes install software-properties-common build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+sudo apt --assume-yes install python3.9 python3-pip python3-virtualenv
 
-sudo apt --assume-yes install python3-pip
+#sudo apt-get upgrade -y
 
-sudo apt-get --assume-yes install python3-virtualenv
-
-sudo apt --assume-yes update
-sudo apt --assume-yes install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb 
+sudo dpkg -i cuda-keyring_1.0-1_all.deb
+sudo apt-get --assume-yes  update
+sudo apt-get -y install cuda-drivers
 
 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 
@@ -22,41 +23,9 @@ source .bashrc
 
 sudo /anaconda/bin/conda update conda -y
 
-# sudo add-apt-repository ppa:graphics-drivers/ppa 
-# sudo apt update 
-# sudo apt install nvidia-driver-460 # replace 460 with your specific version
-
-sudo apt-get --assume-yes update
-sudo apt-get upgrade -y
-# sudo apt-get dist-upgrade -y
-# sudo apt install nvidia-driver-460 # replace 460 with your specific version
-# sudo apt-get install cuda-drivers
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb 
-sudo dpkg -i cuda-keyring_1.0-1_all.deb
-sudo apt-get --assume-yes  update
-sudo apt-get -y install cuda-drivers
-
-# Clone the SD WebUI
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-
-# Go to the models folder
-cd stable-diffusion-webui/models/Stable-diffusion/
-
-wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
-
-# Download Stable Diffusion 1.5 checkpoint (requires a HuggingFace auth token)
-# curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
-
-# Create a new Conda env with the desired Python version
-/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
-
-# Activate the new env
-/anaconda/bin/conda activate a1111-sdwebui
-
-# Go back to the root of the repo..
-cd ../..
-
 sudo pip install --upgrade pip
+
+apt install python3.10-venv
 
 # ..so we can install the repository's dependencies..
 pip install GitPython
@@ -92,6 +61,28 @@ pip install torchdiffeq
 pip install torchsde
 pip install transformers==4.25.1
 pip install chardet
+
+
+# Clone the SD WebUI
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+
+# Go to the models folder
+cd stable-diffusion-webui/models/Stable-diffusion/
+
+wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
+
+# Download Stable Diffusion 1.5 checkpoint (requires a HuggingFace auth token)
+# curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
+
+# Create a new Conda env with the desired Python version
+/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
+
+# Activate the new env
+/anaconda/bin/conda activate a1111-sdwebui
+
+# Go back to the root of the repo..
+cd ../..
+
 
 # ..which for some reason won't install everything leading to the web ui crashing 
 # while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
