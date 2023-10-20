@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo -H -u dev /home/dev/stable-diffusion-webui/webui.sh --share --enable-insecure-extension-access &
+
+exit 0
