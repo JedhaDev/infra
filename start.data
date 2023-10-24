@@ -1,5 +1,11 @@
 #!/bin/bash
 
-sudo -H -u dev /home/dev/stable-diffusion-webui/webui.sh --share --enable-insecure-extension-access &
+sudo -H -u dev /home/dev/functions/neural.functions.Shooter/start.sh &
+
+sudo -H -u dev /home/dev/functions/neural.functions.Academy/AcademiaFunctionApp/start.sh &
+
+sudo -H -u dev /home/dev/stable-diffusion-webui/webui.sh --port 7876 --share --enable-insecure-extension-access &
+
+sudo -H -u dev /home/dev/stable-diffusion-webui/webui.sh --port 7877 --share --enable-insecure-extension-access &
 
 exit 0
