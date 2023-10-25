@@ -12,8 +12,6 @@ sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get --assume-yes  update
 sudo apt-get -y install cuda-drivers
 
-wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
-
 # Conda
 wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh 
 sudo bash Anaconda3-2022.05-Linux-x86_64.sh  -b -p /anaconda
@@ -62,26 +60,17 @@ pip install torchsde
 pip install transformers==4.25.1
 pip install chardet
 
-
-# Clone the SD WebUI
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-
-# Go to the models folder
-cd stable-diffusion-webui/models/Stable-diffusion/
-
-wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
-
 # Download Stable Diffusion 1.5 checkpoint (requires a HuggingFace auth token)
 # curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
 
 # Create a new Conda env with the desired Python version
-/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
+###/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
-/anaconda/bin/conda activate a1111-sdwebui
+# /anaconda/bin/conda activate a1111-sdwebui
 
 # Go back to the root of the repo..
-cd ../..
+cd /home/dev
 
 
 # ..which for some reason won't install everything leading to the web ui crashing 
@@ -98,3 +87,95 @@ git config --global --add safe.directory '*'
 
 # Don't forget to pick a good userame/password combo, otherwise anyone will be able to access your instance
 # sudo accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
+
+################################### INSTANCE 1
+cd /home/dev
+mkdir instance1
+cd /home/dev/instance1
+mkdir blobtemp
+# Clone the SD WebUI
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+cd stable-diffusion-webui
+mkdir outputs
+cd models/Stable-diffusion/
+wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
+
+################################### INSTANCE 2
+cd /home/dev
+mkdir instance2
+cd /home/dev/instance2
+mkdir blobtemp
+# Clone the SD WebUI
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+cd stable-diffusion-webui
+mkdir outputs
+cd models/Stable-diffusion/
+wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
+
+################################### Mounting Azure Storage
+cd /home/dev
+
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get --assume-yes  update
+sudo apt-get  --assume-yes install blobfuse fuse
+
+echo "# ----- Adding azure storage account" | sudo tee -a /etc/profile
+echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a /etc/profile
+echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a /etc/profile
+
+################################### Adding autostart
+cd /home/dev
+wget https://raw.githubusercontent.com/JedhaDev/infra/main/start.data
+mv start.data rc.local
+sudo chmod +x rc.local
+sudo cp rc.local /etc/rc.local
+
+
+################################### Adding AZURE FUNCTIONS
+cd /home/dev
+
+#mkdir functions
+#cd functions
+#git clone https://$3:$4@raonadev.visualstudio.com/HereWeGo/_git/neural.functions.Academy
+#cd neural.functions.Academy
+#git checkout dev
+
+#cd /home/dev/functions
+#git clone https://$3:$4@raonadev.visualstudio.com/HereWeGo/_git/neural.functions.Shooter
+#cd neural.functions.Shooter
+#git checkout dev
+
+#cd /home/dev
+#sudo apt-get update
+#sudo apt-get install -y dotnet-sdk-6.0
+
+#curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+#sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+
+#sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
+#sudo apt-get update
+#sudo apt-get install azure-functions-core-tools-4
+
+#cd /home/dev/functions/neural.functions.Academy/AcademiaFunctionApp
+#echo cd /home/dev/functions/neural.functions.Academy/AcademiaFunctionApp >> start.sh
+#echo func start --port 7072 >> start.sh
+#sudo chmod +x start.sh
+#./start.sh &
+
+#cd /home/dev/functions/neural.functions.Shooter
+#echo cd /home/dev/functions/neural.functions.Shooter >> start.sh 
+#echo func start >> start.sh
+#sudo chmod +x start.sh
+#./start.sh &
+
+
+## pending download and install net6
+## pending to pass ENV variables to support azure functions
+## pending create job to automatic start functions
+
+#./webui.sh --share --enable-insecure-extension-access &
+
+#start on startup
+#task
+#exec /home/dev/stable-diffusion-webui/webui.sh --share --enable-insecure-extension-access &
