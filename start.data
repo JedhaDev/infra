@@ -1,11 +1,12 @@
 #!/bin/bash
 
-sudo -H -u dev /home/dev/functions/neural.functions.Shooter/start.sh &
+#sudo -H -u dev /home/dev/functions/neural.functions.Shooter/start.sh &
+#sudo -H -u dev /home/dev/functions/neural.functions.Academy/AcademiaFunctionApp/start.sh &
 
-sudo -H -u dev /home/dev/functions/neural.functions.Academy/AcademiaFunctionApp/start.sh &
+blobfuse /home/dev/instance1/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance1/blobtemp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --container-name=shooter --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120
+blobfuse /home/dev/instance2/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance2/blobtemp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --container-name=academy --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120
 
-sudo -H -u dev /home/dev/stable-diffusion-webui/webui.sh --port 7876 --share --enable-insecure-extension-access &
-
-sudo -H -u dev /home/dev/stable-diffusion-webui/webui.sh --port 7877 --share --enable-insecure-extension-access &
+sudo -H -u dev /home/dev/instance1/stable-diffusion-webui/webui.sh --port 7876 --share --enable-insecure-extension-access &
+sudo -H -u dev /home/dev/instance2/stable-diffusion-webui/webui.sh --port 7877 --share --enable-insecure-extension-access &
 
 exit 0
