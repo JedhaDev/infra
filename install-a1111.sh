@@ -20,7 +20,7 @@ source .bashrc
 sudo /anaconda/bin/conda update conda -y
 
 #sudo pip install --upgrade pip
-#apt install python3.10-venv
+apt --assume-yes install python3.10-venv
 
 # ..so we can install the repository's dependencies..
 pip install GitPython
