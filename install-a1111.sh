@@ -93,6 +93,7 @@ cd stable-diffusion-webui
 mkdir outputs
 cd extensions
 git clone https://github.com/kex0/batch-face-swap.git
+#git clone https://github.com/glucauze/sd-webui-faceswaplab.git
 git clone https://github.com/Mikubill/sd-webui-controlnet.git
 
 cd ../models/Stable-diffusion/
@@ -116,7 +117,7 @@ echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance1/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance1/blobtemp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --container-name=shooter --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance2/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance2/blobtemp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --container-name=academy --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
-
+sudo chmod +x mount.sh
 
 
 ################################### Adding autostart
