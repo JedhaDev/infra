@@ -108,10 +108,6 @@ sudo dpkg -i packages-microsoft-prod.deb
 sudo apt-get --assume-yes  update
 sudo apt-get  --assume-yes install blobfuse fuse
 
-echo "# ----- Adding azure storage account" | sudo tee -a /etc/profile
-echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a /etc/profile
-echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a /etc/profile
-
 cd /home/dev
 echo "# ----- Configuration storage" | sudo tee -a conn-shooter.cfg
 echo "accountName $1" | sudo tee -a conn-shooter.cfg
