@@ -5,8 +5,6 @@ sudo apt-get --assume-yes update
 sudo apt --assume-yes install software-properties-common build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
 sudo apt --assume-yes install python3.9 python3-pip python3-virtualenv
 
-#sudo apt-get upgrade -y
-
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb 
 sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get --assume-yes  update
@@ -21,9 +19,8 @@ source .bashrc
 
 sudo /anaconda/bin/conda update conda -y
 
-sudo pip install --upgrade pip
-
-apt install python3.10-venv
+#sudo pip install --upgrade pip
+#apt install python3.10-venv
 
 # ..so we can install the repository's dependencies..
 pip install GitPython
@@ -60,35 +57,17 @@ pip install torchsde
 pip install transformers==4.25.1
 pip install chardet
 
-# Download Stable Diffusion 1.5 checkpoint (requires a HuggingFace auth token)
-# curl -H "Authorization: Bearer <your-huggingface-token>" https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt --location --output v1-5-pruned-emaonly.ckpt
-
 # Create a new Conda env with the desired Python version
-###/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
+/anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
 
 # Activate the new env
 # /anaconda/bin/conda activate a1111-sdwebui
 
 # Go back to the root of the repo..
 cd /home/dev
-
-
-# ..which for some reason won't install everything leading to the web ui crashing 
-# while complaining about `undefined symbol: cublasLtGetStatusString, version libcublasLt.so.11`
-# So, we need to install the missing dependencies directly from conda
 /anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 
-# Mark everything as a safe directory,
-# we need this because when first run,
-# the web ui will try to clone some repos under this directory, 
-# and we'll get a lot of dubious ownership errors,
-# which we don't really want to be honest
-git config --global --add safe.directory '*'
-
-# Don't forget to pick a good userame/password combo, otherwise anyone will be able to access your instance
-# sudo accelerate launch --mixed_precision=bf16 --num_cpu_threads_per_process=6 launch.py --share --gradio-auth $1:$2
-
-################################### INSTANCE 1
+################################### INSTANCE 1 - Academy
 cd /home/dev
 mkdir instance1
 cd /home/dev/instance1
@@ -97,10 +76,13 @@ mkdir blobtemp
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
 mkdir outputs
-cd models/Stable-diffusion/
+cd extensions
+git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
+
+cd ../models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
 
-################################### INSTANCE 2
+################################### INSTANCE 2 - Shooter
 cd /home/dev
 mkdir instance2
 cd /home/dev/instance2
@@ -109,7 +91,12 @@ mkdir blobtemp
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
 mkdir outputs
-cd models/Stable-diffusion/
+cd extensions
+git clone https://github.com/kex0/batch-face-swap.git
+git clone https://github.com/glucauze/sd-webui-faceswaplab.git
+git clone https://github.com/Mikubill/sd-webui-controlnet.git
+
+cd ../models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
 
 ################################### Mounting Azure Storage
@@ -134,6 +121,7 @@ sudo cp rc.local /etc/rc.local
 
 ################################### Adding AZURE FUNCTIONS
 cd /home/dev
+sudo chown -R dev *
 
 #mkdir functions
 #cd functions
