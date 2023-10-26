@@ -112,9 +112,13 @@ echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a /etc/profile
 echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a /etc/profile
 
 cd /home/dev
-echo "# ----- Adding azure storage account" | sudo tee -a .profile
-echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a .profile
-echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a .profile
+echo "# ----- Adding azure storage account" | sudo tee -a mount.sh
+echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a mount.sh
+echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a mount.sh
+echo "sudo -H -u dev blobfuse /home/dev/instance1/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance1/blobtemp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --container-name=shooter --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
+echo "sudo -H -u dev blobfuse /home/dev/instance2/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance2/blobtemp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --container-name=academy --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
+
+
 
 ################################### Adding autostart
 cd /home/dev
