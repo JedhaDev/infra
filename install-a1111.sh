@@ -111,6 +111,11 @@ echo "# ----- Adding azure storage account" | sudo tee -a /etc/profile
 echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a /etc/profile
 echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a /etc/profile
 
+cd /home/dev
+echo "# ----- Adding azure storage account" | sudo tee -a .profile
+echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a .profile
+echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a .profile
+
 ################################### Adding autostart
 cd /home/dev
 wget https://raw.githubusercontent.com/JedhaDev/infra/main/start.data
