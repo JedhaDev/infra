@@ -93,7 +93,6 @@ cd stable-diffusion-webui
 mkdir outputs
 cd extensions
 git clone https://github.com/kex0/batch-face-swap.git
-git clone https://github.com/glucauze/sd-webui-faceswaplab.git
 git clone https://github.com/Mikubill/sd-webui-controlnet.git
 
 cd ../models/Stable-diffusion/
