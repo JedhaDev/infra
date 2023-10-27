@@ -129,15 +129,26 @@ sudo chmod +x mount.sh
 
 ################################### Adding autostart
 cd /home/dev
-wget https://raw.githubusercontent.com/JedhaDev/infra/main/start.data
-mv start.data rc.local
+echo "#!/bin/bash" | sudo tee -a rc.local
+echo "sudo -H -u dev /home/dev/mount.sh" | sudo tee -a rc.local
+echo "(" | sudo tee -a rc.local
+echo "cd /home/dev/instance1/stable-diffusion-webui" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --port 7876 --listen $3 --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo ")" | sudo tee -a rc.local
+echo "(" | sudo tee -a rc.local
+echo "cd /home/dev/instance2/stable-diffusion-webui" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --port 7877 --listen $3 --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo ")" | sudo tee -a rc.local
 sudo chmod +x rc.local
 sudo cp rc.local /etc/rc.local
+
 
 
 ################################### Adding AZURE FUNCTIONS
 cd /home/dev
 sudo chown -R dev *
+
+sudo shutdown
 
 #mkdir functions
 #cd functions
