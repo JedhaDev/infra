@@ -7,8 +7,14 @@ sudo apt --assume-yes install python3.9 python3-pip python3-virtualenv
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb 
 sudo dpkg -i cuda-keyring_1.0-1_all.deb
+
+wget https://github.com/TimDettmers/bitsandbytes/blob/main/cuda_install.sh
 sudo apt-get --assume-yes  update
 sudo apt-get -y install cuda-drivers
+
+#sudo apt --assume-yes  autoremove nvidia* --purge
+#sudo apt --assume-yes install nvidia-driver-525
+#sudo apt --assume-yes install nvidia-cuda-toolkit
 
 # Conda
 wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh 
@@ -20,7 +26,7 @@ source .bashrc
 sudo /anaconda/bin/conda update conda -y
 
 #sudo pip install --upgrade pip
-apt --assume-yes install python3.10-venv
+apt install --assume-yes python3.10-venv
 sudo apt-get --assume-yes install fuse3
 
 # ..so we can install the repository's dependencies..
@@ -133,11 +139,11 @@ echo "#!/bin/bash" | sudo tee -a rc.local
 echo "sudo -H -u dev /home/dev/mount.sh" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance1/stable-diffusion-webui" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --port 7876 --listen $3 --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --port 7876 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance2/stable-diffusion-webui" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --port 7877 --listen $3 --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --port 7877 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 sudo chmod +x rc.local
 sudo cp rc.local /etc/rc.local
@@ -148,7 +154,7 @@ sudo cp rc.local /etc/rc.local
 cd /home/dev
 sudo chown -R dev *
 
-sudo shutdown
+sudo reboot
 
 #mkdir functions
 #cd functions
