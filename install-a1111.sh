@@ -5,12 +5,18 @@ sudo apt-get --assume-yes update
 sudo apt --assume-yes install software-properties-common build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
 sudo apt --assume-yes install python3.9 python3-pip python3-virtualenv
 
+
+################################### CUDA
+wget https://raw.githubusercontent.com/TimDettmers/bitsandbytes/main/cuda_install.sh
+sudo chmod +x cuda_install.sh
+bash cuda_install.sh 113 ~/local/
+
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb 
 sudo dpkg -i cuda-keyring_1.0-1_all.deb
 
-wget https://github.com/TimDettmers/bitsandbytes/blob/main/cuda_install.sh
 sudo apt-get --assume-yes  update
 sudo apt-get -y install cuda-drivers
+
 
 #sudo apt --assume-yes  autoremove nvidia* --purge
 #sudo apt --assume-yes install nvidia-driver-525
@@ -86,7 +92,7 @@ mkdir outputs
 cd extensions
 git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 
-cd ../models/Stable-diffusion/
+cd /home/dev/instance1/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
 
 ################################### INSTANCE 2 - Shooter
@@ -103,7 +109,7 @@ git clone https://github.com/kex0/batch-face-swap.git
 #git clone https://github.com/glucauze/sd-webui-faceswaplab.git
 git clone https://github.com/Mikubill/sd-webui-controlnet.git
 
-cd ../models/Stable-diffusion/
+cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
 
 ################################### Mounting Azure Storage
@@ -139,15 +145,14 @@ echo "#!/bin/bash" | sudo tee -a rc.local
 echo "sudo -H -u dev /home/dev/mount.sh" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance1/stable-diffusion-webui" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --port 7876 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7876 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance2/stable-diffusion-webui" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --port 7877 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7877 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 sudo chmod +x rc.local
 sudo cp rc.local /etc/rc.local
-
 
 
 ################################### Adding AZURE FUNCTIONS
