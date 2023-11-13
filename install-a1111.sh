@@ -151,8 +151,6 @@ sudo cp rc.local /etc/rc.local
 cd /home/dev
 sudo chown -R dev *
 
-sudo reboot
-
 #mkdir functions
 #cd functions
 #git clone https://$3:$4@raonadev.visualstudio.com/HereWeGo/_git/neural.functions.Academy
