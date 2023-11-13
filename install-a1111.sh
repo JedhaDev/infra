@@ -17,6 +17,12 @@ sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get --assume-yes  update
 sudo apt-get -y install cuda-drivers
 
+sudo apt update
+sudo apt install python3-venv -y
+mkdir pytorch_env
+cd pytorch_env
+python3 -m venv pytorch_env
+source pytorch_env/bin/activate
 
 #sudo apt --assume-yes  autoremove nvidia* --purge
 #sudo apt --assume-yes install nvidia-driver-525
@@ -34,41 +40,6 @@ sudo /anaconda/bin/conda update conda -y
 #sudo pip install --upgrade pip
 apt install --assume-yes python3.10-venv
 sudo apt-get --assume-yes install fuse3
-
-# ..so we can install the repository's dependencies..
-pip install GitPython
-pip install Pillow
-pip install accelerate
-
-pip install basicsr
-pip install blendmodes
-pip install clean-fid
-pip install einops
-pip install gfpgan
-pip install gradio==3.32.0
-pip install inflection
-pip install jsonmerge
-pip install kornia
-pip install lark
-pip install numpy
-pip install omegaconf
-
-pip install piexif
-pip install psutil
-pip install pytorch_lightning
-pip install realesrgan
-pip install requests
-pip install resize-right
-
-pip install safetensors
-pip install scikit-image>=0.19
-pip install timm
-pip install tomesd
-pip install torch
-pip install torchdiffeq
-pip install torchsde
-pip install transformers==4.25.1
-pip install chardet
 
 # Create a new Conda env with the desired Python version
 /anaconda/bin/conda create -n a1111-sdwebui python=3.10 -y
@@ -88,9 +59,18 @@ mkdir blobtemp
 # Clone the SD WebUI
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+pip3 uninstall --yes torch torchvision
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6
 mkdir outputs
 cd extensions
 git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
+git clone https://github.com/kex0/batch-face-swap.git
+#git clone https://github.com/glucauze/sd-webui-faceswaplab.git
+git clone https://github.com/Mikubill/sd-webui-controlnet.git
+git clone https://github.com/facebookresearch/xformers.git
 
 cd /home/dev/instance1/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
@@ -108,6 +88,7 @@ cd extensions
 git clone https://github.com/kex0/batch-face-swap.git
 #git clone https://github.com/glucauze/sd-webui-faceswaplab.git
 git clone https://github.com/Mikubill/sd-webui-controlnet.git
+git clone https://github.com/facebookresearch/xformers.git
 
 cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
@@ -131,11 +112,20 @@ echo "accountName $1" | sudo tee -a conn-academy.cfg
 echo "accountKey $2" | sudo tee -a conn-academy.cfg
 echo "containerName academy" | sudo tee -a conn-academy.cfg
 
+echo "# ----- Configuration storage" | sudo tee -a conn-models.cfg
+echo "accountName $1" | sudo tee -a conn-models.cfg
+echo "accountKey $2" | sudo tee -a conn-models.cfg
+echo "containerName models" | sudo tee -a conn-models.cfg
+
 echo "# ----- Adding azure storage account" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance1/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance1/blobtemp --config-file=/home/dev/conn-shooter.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance2/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance2/blobtemp --config-file=/home/dev/conn-academy.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
+echo "sudo -H -u dev blobfuse /models --tmp-path=/home/dev/instance2/blobtemp --config-file=/home/dev/conn-models.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
+
+sudo mkdir /models
+sudo chmod 777 /models
 sudo chmod +x mount.sh
 
 
@@ -145,11 +135,13 @@ echo "#!/bin/bash" | sudo tee -a rc.local
 echo "sudo -H -u dev /home/dev/mount.sh" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance1/stable-diffusion-webui" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --api --port 7876 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo "export PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.6, max_split_size_mb:128" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7876 --xformers --listen --share --enable-insecure-extension-access -ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance2/stable-diffusion-webui" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --api --port 7877 --listen --share --enable-insecure-extension-access &" | sudo tee -a rc.local
+echo "export PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.6, max_split_size_mb:128" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7877 --xformers --listen --share --enable-insecure-extension-access -ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 sudo chmod +x rc.local
 sudo cp rc.local /etc/rc.local
