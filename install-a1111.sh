@@ -5,6 +5,12 @@ sudo apt-get --assume-yes update
 sudo apt --assume-yes install software-properties-common build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
 sudo apt --assume-yes install python3.9 python3-pip python3-virtualenv
 
+#sudo apt --assume-yes install git build-essential
+#sudo apt --assume-yes install python3-pip python3-venv python3-dev
+# fix <cmath> not found
+#sudo apt --assume-yes install libstdc++-12-dev
+# optional, suppress warnings from torchvision
+#sudo apt --assume-yes install libpng-dev libjpeg-dev
 
 ################################### CUDA
 wget https://raw.githubusercontent.com/TimDettmers/bitsandbytes/main/cuda_install.sh
@@ -17,6 +23,10 @@ sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get --assume-yes  update
 sudo apt-get -y install cuda-drivers
 
+#sudo apt --assume-yes  autoremove nvidia* --purge
+#sudo apt --assume-yes install nvidia-driver-525
+#sudo apt --assume-yes install nvidia-cuda-toolkit
+
 sudo apt update
 sudo apt install python3-venv -y
 mkdir pytorch_env
@@ -24,9 +34,8 @@ cd pytorch_env
 python3 -m venv pytorch_env
 source pytorch_env/bin/activate
 
-#sudo apt --assume-yes  autoremove nvidia* --purge
-#sudo apt --assume-yes install nvidia-driver-525
-#sudo apt --assume-yes install nvidia-cuda-toolkit
+#pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+#pip3 install torch torchvision torchaudio
 
 # Conda
 wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh 
@@ -38,7 +47,7 @@ source .bashrc
 sudo /anaconda/bin/conda update conda -y
 
 #sudo pip install --upgrade pip
-apt install --assume-yes python3.10-venv
+#apt install --assume-yes python3.10-venv
 sudo apt-get --assume-yes install fuse3
 
 # Create a new Conda env with the desired Python version
@@ -49,9 +58,9 @@ sudo apt-get --assume-yes install fuse3
 
 # Go back to the root of the repo..
 cd /home/dev
-/anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
+#/anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 
-################################### INSTANCE 1 - Academy
+################################### INSTANCE 1 - Shooter
 cd /home/dev
 mkdir instance1
 cd /home/dev/instance1
@@ -66,7 +75,6 @@ pip3 uninstall --yes torch torchvision
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6
 mkdir outputs
 cd extensions
-git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 git clone https://github.com/kex0/batch-face-swap.git
 #git clone https://github.com/glucauze/sd-webui-faceswaplab.git
 git clone https://github.com/Mikubill/sd-webui-controlnet.git
@@ -75,7 +83,7 @@ git clone https://github.com/facebookresearch/xformers.git
 cd /home/dev/instance1/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
 
-################################### INSTANCE 2 - Shooter
+################################### INSTANCE 2 - Academy
 cd /home/dev
 mkdir instance2
 cd /home/dev/instance2
@@ -85,9 +93,7 @@ git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
 mkdir outputs
 cd extensions
-git clone https://github.com/kex0/batch-face-swap.git
-#git clone https://github.com/glucauze/sd-webui-faceswaplab.git
-git clone https://github.com/Mikubill/sd-webui-controlnet.git
+git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 git clone https://github.com/facebookresearch/xformers.git
 
 cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
@@ -136,12 +142,12 @@ echo "sudo -H -u dev /home/dev/mount.sh" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance1/stable-diffusion-webui" | sudo tee -a rc.local
 echo "export PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.6, max_split_size_mb:128" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --api --port 7876 --xformers --listen --share --enable-insecure-extension-access -ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7876 --xformers --listen --share --enable-insecure-extension-access --ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance2/stable-diffusion-webui" | sudo tee -a rc.local
 echo "export PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.6, max_split_size_mb:128" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --api --port 7877 --xformers --listen --share --enable-insecure-extension-access -ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7877 --xformers --listen --share --enable-insecure-extension-access --ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 sudo chmod +x rc.local
 sudo cp rc.local /etc/rc.local
@@ -150,6 +156,8 @@ sudo cp rc.local /etc/rc.local
 ################################### Adding AZURE FUNCTIONS
 cd /home/dev
 sudo chown -R dev *
+
+#sudo reboot
 
 #mkdir functions
 #cd functions
