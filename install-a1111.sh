@@ -124,7 +124,7 @@ echo "containerName academy" | sudo tee -a conn-academy.cfg
 #echo "containerName models" | sudo tee -a conn-models.cfg
 
 echo "# ----- Adding azure storage account" | sudo tee -a mount.sh
-echo "sudo mount /dev/sdc1 /models" | sudo tee -a mount.sh
+#echo "sudo mount /dev/sdc1 /models" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance1/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance1/blobtemp --config-file=/home/dev/conn-shooter.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
