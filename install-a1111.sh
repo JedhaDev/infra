@@ -118,17 +118,17 @@ echo "accountName $1" | sudo tee -a conn-academy.cfg
 echo "accountKey $2" | sudo tee -a conn-academy.cfg
 echo "containerName academy" | sudo tee -a conn-academy.cfg
 
-echo "# ----- Configuration storage" | sudo tee -a conn-models.cfg
-echo "accountName $1" | sudo tee -a conn-models.cfg
-echo "accountKey $2" | sudo tee -a conn-models.cfg
-echo "containerName models" | sudo tee -a conn-models.cfg
+#echo "# ----- Configuration storage" | sudo tee -a conn-models.cfg
+#echo "accountName $1" | sudo tee -a conn-models.cfg
+#echo "accountKey $2" | sudo tee -a conn-models.cfg
+#echo "containerName models" | sudo tee -a conn-models.cfg
 
 echo "# ----- Adding azure storage account" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCOUNT=$1" | sudo tee -a mount.sh
 echo "export AZURE_STORAGE_ACCESS_KEY=$2" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance1/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance1/blobtemp --config-file=/home/dev/conn-shooter.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
 echo "sudo -H -u dev blobfuse /home/dev/instance2/stable-diffusion-webui/outputs --tmp-path=/home/dev/instance2/blobtemp --config-file=/home/dev/conn-academy.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
-echo "sudo -H -u dev blobfuse /models --tmp-path=/home/dev/instance2/blobtemp --config-file=/home/dev/conn-models.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
+#echo "sudo -H -u dev blobfuse /models --tmp-path=/home/dev/instance2/blobtemp --config-file=/home/dev/conn-models.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120" | sudo tee -a mount.sh
 
 sudo mkdir /models
 sudo chmod 777 /models
