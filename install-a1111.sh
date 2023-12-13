@@ -29,6 +29,7 @@ sudo apt-get -y install cuda-drivers
 
 sudo apt update
 sudo apt install python3-venv -y
+sudo apt install unzip -y
 mkdir pytorch_env
 cd pytorch_env
 python3 -m venv pytorch_env
@@ -59,6 +60,9 @@ sudo apt-get --assume-yes install fuse3
 # Go back to the root of the repo..
 cd /home/dev
 #/anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
+
+pip install -U diffusers accelerate transformers
+pip install -U discord_webhook
 
 ################################### INSTANCE 1 - Shooter
 cd /home/dev
@@ -93,7 +97,10 @@ git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
 mkdir outputs
 cd extensions
-git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
+#git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
+wget https://github.com/d8ahazard/sd_dreambooth_extension/archive/refs/tags/1.0.14.zip
+unzip 1.0.14.zip 
+rm 1.0.14.zip
 git clone https://github.com/facebookresearch/xformers.git
 
 cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
