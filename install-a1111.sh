@@ -155,7 +155,7 @@ echo ")" | sudo tee -a rc.local
 echo "(" | sudo tee -a rc.local
 echo "cd /home/dev/instance2/stable-diffusion-webui" | sudo tee -a rc.local
 echo "export PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.6, max_split_size_mb:128" | sudo tee -a rc.local
-echo "sudo -H -u dev ./webui.sh --api --port 7877 --xformers --listen --share --enable-insecure-extension-access --ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
+echo "sudo -H -u dev ./webui.sh --api --port 7878 --xformers --listen --share --enable-insecure-extension-access --ckpt-dir /models/Stable-diffusion &" | sudo tee -a rc.local
 echo ")" | sudo tee -a rc.local
 sudo chmod +x rc.local
 sudo cp rc.local /etc/rc.local
