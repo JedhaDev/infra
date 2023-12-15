@@ -99,14 +99,14 @@ cd stable-diffusion-webui
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
-pip3 uninstall --yes torch torchvision
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6
+#pip3 uninstall --yes torch torchvision
+#pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6
 mkdir outputs
 cd extensions
-git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
-#wget https://github.com/d8ahazard/sd_dreambooth_extension/archive/refs/tags/1.0.14.zip
-#unzip 1.0.14.zip 
-#rm 1.0.14.zip
+#git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
+wget https://github.com/d8ahazard/sd_dreambooth_extension/archive/refs/tags/1.0.14.zip
+unzip 1.0.14.zip 
+rm 1.0.14.zip
 git clone https://github.com/facebookresearch/xformers.git
 
 cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
