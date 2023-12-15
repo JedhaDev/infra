@@ -61,8 +61,9 @@ sudo apt-get --assume-yes install fuse3
 cd /home/dev
 #/anaconda/bin/conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 
-pip install -U diffusers accelerate transformers
-pip install -U discord_webhook
+#pip install -U diffusers accelerate transformers
+#pip install -U discord_webhook
+#pip install diffusers
 
 ################################### INSTANCE 1 - Shooter
 cd /home/dev
@@ -95,9 +96,18 @@ mkdir blobtemp
 # Clone the SD WebUI
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+pip3 uninstall --yes torch torchvision
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6
 mkdir outputs
 cd extensions
 git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
+#wget https://github.com/d8ahazard/sd_dreambooth_extension/archive/refs/tags/1.0.14.zip
+#unzip 1.0.14.zip 
+#rm 1.0.14.zip
+git clone https://github.com/facebookresearch/xformers.git
 
 cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
