@@ -97,11 +97,7 @@ git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
 mkdir outputs
 cd extensions
-#git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
-wget https://github.com/d8ahazard/sd_dreambooth_extension/archive/refs/tags/1.0.14.zip
-unzip 1.0.14.zip 
-rm 1.0.14.zip
-git clone https://github.com/facebookresearch/xformers.git
+git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 
 cd /home/dev/instance2/stable-diffusion-webui/models/Stable-diffusion/
 wget https://civitai.com/api/download/models/114367 -O realisticVisionV40_v40VAE.safetensors
